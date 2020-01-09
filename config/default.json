@@ -1,0 +1,4 @@
+{
+    "mongoConnectionString":"mongodb://localhost:27017/musicdb",
+    "port":3004,"jwtPrivateKey":"khairu"
+}
