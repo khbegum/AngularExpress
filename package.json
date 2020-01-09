@@ -19,7 +19,7 @@
     "joi": "^14.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "mongoose": "^5.3.13",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.18.6"
   }
 }
