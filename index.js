@@ -12,6 +12,8 @@ app.use(bodyParser.json())
 const userRouter=require('./router/user.router')
 const authRouter=require('./router/auth.router')
 const gadgetRouter=require('./router/gadget.router')
+const cartRouter=require('./router/cart.router')
+
 
 mongoose.connect(config.get("mongoConnectionString"));
 mongoose.connection.on("connected",()=>{
@@ -28,6 +30,8 @@ app.use(cors());
 app.use('/api/users',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/gadgets',gadgetRouter);
+app.use('/api/cart',cartRouter)
+
 // require('./router/auth.router')(app);
 // require('./router/user.router')(app);
 

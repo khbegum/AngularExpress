@@ -28,6 +28,7 @@ router.post('/',async(req,res)=>{
     // if(error)
     // return res.status(400).send(error.details[0].message);
     //check for existence
+    
     let user=await User.findOne({email:req.body.email});
     if(user)
     return res.status(400).send("User already registered");
@@ -38,7 +39,7 @@ router.post('/',async(req,res)=>{
     await newUser.save();
     const token=jwt.sign({_id:newUser._id,email:newUser.email},config.get('jwtPrivateKey'))
     res.header('x-auth-token',token)
-    .status(200).send(json.parse(_.pick(newUser,['_id','name','email'])));
+    .status(200).send((_.pick(newUser,['_id','name','email'])));
 })
 module.exports=router
 // const express= require('express');
