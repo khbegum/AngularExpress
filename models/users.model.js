@@ -13,6 +13,12 @@ email:{
     minlength:5,
     maxlength:255
 },
+type:{
+    type:String,
+    required:true,
+    minlength:5,
+    maxlength:255
+},
 
 password:{
     type:String,
@@ -25,7 +31,7 @@ function validateUser(user){
     const schema={
         name:Joi.string().required(),
         email:Joi.string().required().email(),
-       
+       type:Joi.string().required(),
         password:Joi.string().min(8).max(1024).required(),
 
     }
