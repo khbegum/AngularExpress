@@ -1,11 +1,12 @@
 const express=require('express');
 const Joi=require('joi')
 const router=express.Router();
+const {Cart}=require('../models/cart.model');
 const {Gadget}=require('../models/gadget.model')
 
 router.get('/',(req,res)=>{
     
-    Gadget.find((err,result)=>{
+    Cart.find((err,result)=>{
         if(err)
          res.status(404).send(err);
          else
@@ -14,22 +15,13 @@ router.get('/',(req,res)=>{
 })
 router.get('/:id',(req,res)=>{
     
-    Gadget.findById({_id:req.params.id},(err,result)=>{
+    Cart.findById({_id:req.params.id},(err,result)=>{
         if(err)
          res.status(404).send(err);
          else
          res.status(200).send(result)
     })
     })
-    router.get('/name',(req,res)=>{
-    
-        Gadget.findById({name:req.params.name},(err,result)=>{
-            if(err)
-             res.status(404).send(err);
-             else
-             res.status(200).send(result)
-        })
-        })
     // function validateRestaurant(restaurant){
     //     const schema={
     //         id:Joi.number().required(),
@@ -43,33 +35,55 @@ router.get('/:id',(req,res)=>{
     //     };
     //     return Joi.validate(restaurant,schema)
     // }
-        router.post('/',(req,res)=>{
-            
-            // const result=validateGadget(req.body)
+        router.post('/',async(req,res)=>{
+           
+            // const result=validateRestaurant(req.body)
             // if(result.error){
             //     return res.status(404).send(result.error.details[0].message);
             // }
             
             
-            let newGadget=new Gadget({
+            let newCart=new Cart({
+                _id:req.body._id,
                 name:req.body.name,
                 type:req.body.type,
                 colour:req.body.colour,
                 cost:req.body.cost,
-                poster:req.body.poster,                                 
+                poster:req.body.poster,
                 description:req.body.description,
                 productCount:req.body.productCount
+            })
+        
+                    
+            // let product=await Cart.findOne({_id:req.body._id});
+            // if(product){
+                
+            //     Cart.findOneAndUpdate({_id:req.body_id},{$set:{name:req.body.name,type:req.body.type,colour:req.body.colour,cost:(req.body.cost)*(req.body.productCount+1),poster:req.body.poster,description:req.body.description,productCount:(req.body.productCount)+1}},
+            //     (err,result)=>{
+            //         if(err) console.log(err);
+            //         else{ 
+                        
+            //             res.status(200).send(result);}
+            //     })            
+            // }
+            // else
+            {
+                newCart.save((err,result)=>{
+                if(err) console.log(err);
+                else{                     
+                    res.status(200).send(result);
+                                                            
+                       
+                }  
                 
             })
-            newGadget.save((err,result)=>{
-                if(err) console.log(err);
-                else res.status(200).send(result)
-            })
+        }
+    
             
         })
         router.delete('/:id',(req,res)=>{
             
-            Gadget.findByIdAndDelete({_id:req.params.id},(err,result)=>{
+            Cart.findByIdAndDelete({_id:req.params.id},(err,result)=>{
                 if(err)
                  res.status(404).send(err);
                  else
@@ -77,17 +91,17 @@ router.get('/:id',(req,res)=>{
             })
             
         })
-        
         router.put('/:id',(req,res)=>{
-            console.log(req)
             
-            Gadget.findByIdAndUpdate({_id:req.params.id},{$set:{name:req.body.name,type:req.body.type,colour:req.body.colour,cost:req.body.cost,poster:req.body.poster,description:req.body.description,productCount:req.body.productCount}},
+            Cart.findOneAndUpdate({_id:req.params.id},{$set:{name:req.body.name,type:req.body.type,colour:req.body.colour,cost:req.body.cost,poster:req.body.poster,description:req.body.description,productCount:req.body.productCount}},
                 (err,result)=>{
                     if(err)
                     res.status(404).send(err);
                  else
                  res.status(200).send(result)
                 })
-                
         })
+    
+
+
     module.exports=router

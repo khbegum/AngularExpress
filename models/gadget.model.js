@@ -3,25 +3,37 @@ const mongoose=require('mongoose');
 const gadgetSchema=mongoose.Schema({
 name:{
     type:String,
+    required:true
     
 },
 type:{
-    type:String
+    type:String,
+    required:true
     
 },
 colour:{
-    type:String    
+    type:String ,
+    required:true  
 },
 cost:{
-    type:Number
+    type:Number,
+    required:true
     
 },
 poster:{
-    type:String
+    type:String ,
+    required:true
     
 },
 description:{
-    type:String
+    type:String ,
+    required:true
+    
+    
+},
+productCount:{
+    type:Number ,
+    required:true
     
     
 }
@@ -33,8 +45,8 @@ function validateGadget(gadget){
         colour:Joi.string().required(),
         cost:Joi.Number().required(),
         poster:Joi.string().required(),
-        description:Joi.string().required()
-
+        description:Joi.string().required(),
+        productCount:Joi.Number().required()
     }
     return Joi.validate(gadget,schema);
 };

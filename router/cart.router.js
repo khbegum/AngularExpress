@@ -1,7 +1,8 @@
 const express=require('express');
 const Joi=require('joi')
 const router=express.Router();
-const {Cart}=require('../models/cart.model')
+const {Cart}=require('../models/cart.model');
+const {Gadget}=require('../models/gadget.model')
 
 router.get('/',(req,res)=>{
     
@@ -34,26 +35,38 @@ router.get('/:id',(req,res)=>{
     //     };
     //     return Joi.validate(restaurant,schema)
     // }
-        router.post('/',(req,res)=>{
-            
+        router.post('/',async(req,res)=>{
+           
             // const result=validateRestaurant(req.body)
             // if(result.error){
             //     return res.status(404).send(result.error.details[0].message);
             // }
-            
+        
             
             let newCart=new Cart({
+                _id:req.body._id,
                 name:req.body.name,
                 type:req.body.type,
                 colour:req.body.colour,
                 cost:req.body.cost,
                 poster:req.body.poster,
-                description:req.body.description
+                description:req.body.description,
+                productCount:1
             })
-            newCart.save((err,result)=>{
+    
+          
+            {
+                newCart.save((err,result)=>{
                 if(err) console.log(err);
-                else res.status(200).send(result)
+                else{                     
+                    res.status(200).send(result);
+                                                            
+                       
+                }  
+                
             })
+        }
+    
             
         })
         router.delete('/:id',(req,res)=>{
@@ -61,19 +74,23 @@ router.get('/:id',(req,res)=>{
             Cart.findByIdAndDelete({_id:req.params.id},(err,result)=>{
                 if(err)
                  res.status(404).send(err);
-                 else
-                 res.status(200).send(result)
+                 else{
+                    res.status(200).send(result)}
             })
+            
             
         })
         router.put('/:id',(req,res)=>{
             
-            Cart.findOneAndUpdate({_id:req.params.id},{$set:{name:req.body.name,type:req.body.type,colour:req.body.colour,cost:req.body.cost,poster:req.body.poster,description:req.body.description}},
+            Cart.findOneAndUpdate({_id:req.params.id},{$set:{name:req.body.name,type:req.body.type,colour:req.body.colour,cost:req.body.cost,poster:req.body.poster,description:req.body.description,productCount:req.body.productCount}},
                 (err,result)=>{
                     if(err)
                     res.status(404).send(err);
-                 else
-                 res.status(200).send(result)
+                 else{
+                     res.status(200).send(result)}
                 })
         })
+    
+
+
     module.exports=router
