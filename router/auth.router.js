@@ -11,7 +11,7 @@ router.post('/',async(req,res)=>{
     //check for validation
     const {error}=validate(req.body)
     if(error)
-     return res.status(400).send(error.details[0].message);
+     return res.status(400).json({message:error.details[0].message});
 
      //check existance of user
      const user=await User.findOne({email:req.body.email});
@@ -33,7 +33,7 @@ router.post('/',async(req,res)=>{
 function validate(user){
     const schema={
         email:Joi.string().min(5).required(),
-        password:Joi.string().min(5).max(1024).required()
+        password:Joi.string().min(10).max(1024).required()
     };
     return Joi.validate(user,schema);
 }

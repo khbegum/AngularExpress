@@ -23,7 +23,7 @@ type:{
 password:{
     type:String,
     required:true,
-    minlength:5,
+    minlength:10,
     maxlength:1024
 }
 });
@@ -32,7 +32,7 @@ function validateUser(user){
         name:Joi.string().required(),
         email:Joi.string().required().email(),
        type:Joi.string().required(),
-        password:Joi.string().min(8).max(1024).required(),
+        password:Joi.string().min(10).max(1024).required(),
 
     }
     return Joi.validate(user,schema);
