@@ -18,11 +18,12 @@ router.post('/',async(req,res)=>{
 
      //if user not found send message
      if(!user)
-     return res.status(400).send("invalid name or password");
+     return res.status(400).json({success:false,message:"invalid mail id, you need to register or give the correct mail id"});
      //compare password 
      const validPassword=await bcrypt.compare(req.body.password,user.password);
      if(!validPassword)
-     return res.status(400).send("invalid email or password");
+     //return res.status(400).send("invalid email or password");
+     res.status(400).json({success:false,message:"Invalid password ,please type correct password"});
      //to check the validity of id,email
      const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
 

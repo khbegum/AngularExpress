@@ -27,7 +27,7 @@ router.post('/',async(req,res)=>{
     
     let user=await User.findOne({email:req.body.email});
     if(user)
-    return res.status(400).send("User already registered");
+    return res.status(400).json({success:false,message:"User already registered"});
     //create new User
     let newUser=new User(_.pick(req.body,['name','email','type','password']))
     const salt=await bcrypt.genSalt(10);
